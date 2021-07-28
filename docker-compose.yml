@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+
+  postgres-db:
+    image: postgres
+    hostname: postgres-db
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: sql-training
+      POSTGRES_PASSWORD: "sql-training!"
+      POSTGRES_DB: postgres
+    ports:
+      - "15432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      
+  pgadmin:
+    image: dpage/pgadmin4
+    hostname: pgadmin
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "sql-training@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "sql-training!"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres-db
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  postgres-data:
+    driver: local
+  pgadmin-data:
+    driver: local
